@@ -59,8 +59,6 @@ func (fd *FuseDeployer) Deploy(id string, k8sclient kubernetes.Interface, config
 	}
 	glog.Infof("created namespace: %s", ns.ObjectMeta.Name)
 
-	//create openshift rolebindings client
-
 	glog.Infof("deploying fuse from deployer, id: %s", id)
 	return &brokerapi.CreateServiceInstanceResponse{
 		Code: http.StatusOK,

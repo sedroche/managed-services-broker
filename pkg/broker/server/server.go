@@ -134,8 +134,6 @@ func (s *server) getServiceInstanceLastOperation(w http.ResponseWriter, r *http.
 
 func (s *server) createServiceInstance(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["instance_id"]
-	glog.Infof("CreateServiceInstance %s...\n", id)
-
 	var req brokerapi.CreateServiceInstanceRequest
 	if err := util.BodyToObject(r, &req); err != nil {
 		glog.Errorf("error unmarshalling: %v", err)

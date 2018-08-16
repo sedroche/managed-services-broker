@@ -111,10 +111,8 @@ func (c *userProvidedController) CreateServiceInstance(
 	id string,
 	req *brokerapi.CreateServiceInstanceRequest,
 ) (*brokerapi.CreateServiceInstanceResponse, error) {
-	glog.Infof("Creating service instance: %+v", req)
-
 	for _, deployer := range c.registeredDeployers {
-		if deployer.DoesDeploy(id) {
+		if deployer.DoesDeploy(req.ServiceID) {
 			return deployer.Deploy(id, c.k8sclient, c.kubeconfig)
 		}
 	}
