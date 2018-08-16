@@ -14,17 +14,6 @@
   revision = "de5bf2ad457846296e2031421a34e2568e304e35"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/aerogear/managed-services"
-  packages = [
-    "pkg/apis/aerogear/v1alpha1",
-    "pkg/broker",
-    "pkg/broker/controller",
-    "pkg/broker/server/util"
-  ]
-  revision = "ec63fa08f09987719b83392cfb97d35c8c4d42d6"
-
-[[projects]]
   name = "github.com/emicklei/go-restful"
   packages = [
     ".",
@@ -186,7 +175,7 @@
     "pkg/k8sclient",
     "pkg/util/k8sutil"
   ]
-  revision = "b5c345fa798e4ab3cc4eb009a8b2486e3a9e5852"
+  revision = "3ac731fc3bea56e357d3596f014ac5bb4a13a0bc"
 
 [[projects]]
   branch = "master"
@@ -199,6 +188,12 @@
   packages = ["."]
   revision = "5f041e8faa004a95c88a202771f4cc3e991971e6"
   version = "v2.0.1"
+
+[[projects]]
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
+  version = "v0.8.0"
 
 [[projects]]
   name = "github.com/sirupsen/logrus"
@@ -413,6 +408,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "d468956681a9c4679c868f506dc0f9f2c68d73f140c6bfb67386c47ddfae2995"
+  inputs-digest = "73e1f1e8a569225b350425a586dcc324963f4473f99e243525a3f51b040d4a51"
   solver-name = "gps-cdcl"
   solver-version = 1
