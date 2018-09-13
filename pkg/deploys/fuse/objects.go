@@ -49,7 +49,8 @@ func getFuseObj(userNamespace string) *v1alpha1.Syndesis {
 			APIVersion: "syndesis.io/v1alpha1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "fuse",
+			Name:        "fuse",
+			Annotations: map[string]string{},
 		},
 		Spec: v1alpha1.SyndesisSpec{
 			SarNamespace:         userNamespace,

@@ -67,6 +67,7 @@ type ContextProfile struct {
 	Platform string `json:"platform,omitempty"`
 	// Namespace is the Kubernetes namespace in which the service instance will be visible.
 	Namespace string `json:"namespace,omitempty"`
+	UserName  string `json:"-"`
 }
 
 // CreateServiceInstanceResponse represents the response from a broker after a

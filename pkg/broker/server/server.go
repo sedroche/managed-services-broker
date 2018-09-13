@@ -19,8 +19,11 @@ package server
 import (
 	"context"
 	"crypto/tls"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	brokerapi "github.com/aerogear/managed-services-broker/pkg/broker"
@@ -133,6 +136,7 @@ func (s *server) getServiceInstanceLastOperation(w http.ResponseWriter, r *http.
 }
 
 func (s *server) createServiceInstance(w http.ResponseWriter, r *http.Request) {
+	glog.Info("headers for provision ", r.Header)
 	id := mux.Vars(r)["instance_id"]
 	var req brokerapi.CreateServiceInstanceRequest
 	if err := util.BodyToObject(r, &req); err != nil {
@@ -140,6 +144,16 @@ func (s *server) createServiceInstance(w http.ResponseWriter, r *http.Request) {
 		util.WriteErrorResponse(w, http.StatusBadRequest, err)
 		return
 	}
+	platformInfo := strings.Replace(r.Header.Get("X-Broker-Api-Originating-Identity"), "kubernetes ", "", -1)
+	decodedInfo, err := base64.StdEncoding.DecodeString(platformInfo)
+	if err != nil {
+		glog.Error("failed to decode platform info", err)
+	}
+	info := map[string]interface{}{}
+	if err := json.Unmarshal(decodedInfo, &info); err != nil {
+		glog.Error("failed to decoded user info", err)
+	}
+	req.ContextProfile.UserName = info["username"].(string)
 
 	if req.Parameters == nil {
 		req.Parameters = make(map[string]interface{})

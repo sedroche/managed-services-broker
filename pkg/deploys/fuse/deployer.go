@@ -43,7 +43,7 @@ func (fd *FuseDeployer) Deploy(instanceID, brokerNamespace string, contextProfil
 	namespace := os.Getenv("POD_NAMESPACE")
 
 	// Fuse custom resource
-	dashboardURL, err := fd.createFuseCustomResource(namespace, brokerNamespace, contextProfile.Namespace, k8sclient)
+	dashboardURL, err := fd.createFuseCustomResource(namespace, brokerNamespace, contextProfile.Namespace, contextProfile.UserName, k8sclient)
 	if err != nil {
 		glog.Errorln(err)
 		return &brokerapi.CreateServiceInstanceResponse{
@@ -87,7 +87,7 @@ func (fd *FuseDeployer) LastOperation(instanceID string, k8sclient kubernetes.In
 	}, nil
 }
 
-func (fd *FuseDeployer) createFuseCustomResource(namespace, brokerNamespace, userNamespace string, k8sclient kubernetes.Interface) (string, error) {
+func (fd *FuseDeployer) createFuseCustomResource(namespace, brokerNamespace, userNamespace, userName string, k8sclient kubernetes.Interface) (string, error) {
 	fuseClient, _, err := k8sClient.GetResourceClient("syndesis.io/v1alpha1", "Syndesis", namespace)
 	if err != nil {
 		return "", errors.Wrap(err, "failed to create fuse client")
@@ -99,6 +99,8 @@ func (fd *FuseDeployer) createFuseCustomResource(namespace, brokerNamespace, use
 	if err != nil {
 		return "", errors.Wrap(err, "failed to get fuse dashboard url")
 	}
+
+	fuseObj.Annotations["syndesis.io/requesting-user"] = userName
 
 	fuseObj.Spec.RouteHostName = fuseDashboardURL
 	_, err = fuseClient.Create(k8sutil.UnstructuredFromRuntimeObject(fuseObj))
