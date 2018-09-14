@@ -130,7 +130,7 @@ func (fd *FuseDeployer) createFuseCustomResource(serviceInstanceID string, names
 
 // Get route hostname for fuse
 func (fd *FuseDeployer) getRouteHostname(namespace, brokerNamespace string, k8sclient kubernetes.Interface) (string, error) {
-	brokerDeployment, err := k8sclient.ExtensionsV1beta1().Deployments(brokerNamespace).Get("msb", metav1.GetOptions{})
+	brokerDeployment, err := k8sclient.Apps().Deployments(brokerNamespace).Get("msb", metav1.GetOptions{})
 	if err != nil {
 		glog.Errorf("Failed to get managed services broker deployment: %+v", err)
 		return "", errors.Wrap(err, "failed to get managed services broker deployment")
