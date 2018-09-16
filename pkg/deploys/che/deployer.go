@@ -23,7 +23,7 @@ func (fd *CheDeployer) DoesDeploy(serviceID string) bool {
 }
 
 func (fd *CheDeployer) DoesRemoveDeploy() bool {
-	return false
+	return true
 }
 
 func (fd *CheDeployer) GetCatalogEntries() []*brokerapi.Service {
